@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-public abstract class ConfProcessor {
+public abstract class AbstractConfProcessor implements ConfProcessor{
 
     protected final ScheduledExecutorService tp = Executors.newScheduledThreadPool(2);
 

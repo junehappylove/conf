@@ -65,23 +65,14 @@ public class FileUtil {
      * @throws IOException
      */
     public static void writeFile(String path,String content) throws IOException {
-
         File file = getFile(path);
-
         if(!judgeFileExist(path)){
-
             file.createNewFile();
-
         }
-
         FileWriter out = new FileWriter(file);
-
         out.write(content);
-
         out.flush();
-
         out.close();
-
     }
 
     public static boolean judgeFileExist(String path){
@@ -98,26 +89,18 @@ public class FileUtil {
      * @return
      * @throws IOException
      */
-    private static File getFile(String path) throws IOException {
-
+    public static File getFile(String path) throws IOException {
         //URL url = FileUtils.class.getClassLoader().getResource("");
         //更通用方案
         URL url = Thread.currentThread().getContextClassLoader().getResource("");
-
-        File file = new File(url.getPath()+path);
-
+        File file = new File(url.getPath(), path);
         if(!file.getParentFile().exists()){
-
             boolean mkResult = file.getParentFile().mkdirs();
             if (!mkResult) {
                 log.error("创建文件夹失败");
-//                System.out.println("创建文件夹失败");
             }
-
         }
-
         return file;
-
     }
 
 }

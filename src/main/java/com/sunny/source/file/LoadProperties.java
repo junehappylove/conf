@@ -10,7 +10,7 @@ import com.sunny.utils.FileUtil;
  * Email zsunny@yeah.net 
  * Date on 2018/10/5.
  */
-public class LoadProperties extends AbstractLoadProperties {
+public class LoadProperties extends AbstractLoadSource {
 
 	private LoadProperties() {
 	}
@@ -33,6 +33,7 @@ public class LoadProperties extends AbstractLoadProperties {
 			return null;
 		}
 		path = path.trim();
+		//remove the "classpath" string for other conf file
 		if (path.startsWith("classpath:")) {
 			path = path.replaceFirst("classpath:", "").trim();
 		}
@@ -40,6 +41,7 @@ public class LoadProperties extends AbstractLoadProperties {
 		if (null == in)
 			return null;
 		properties.load(in);
+		in.close();
 		return convertToMap(properties);
 	}
 

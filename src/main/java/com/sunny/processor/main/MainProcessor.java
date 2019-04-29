@@ -3,10 +3,7 @@ package com.sunny.processor.main;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sunny.processor.ConfClassProcessor;
-import com.sunny.processor.ConfListenerProcessor;
-import com.sunny.processor.ConfProcessor;
-import com.sunny.processor.ConfValueProcessor;
+import com.sunny.processor.*;
 import com.sunny.source.LoadResult;
 import com.sunny.source.listener.ConfListner;
 
@@ -37,7 +34,7 @@ public class MainProcessor {
 
 	public static void process() {
 		confListners.forEach(ConfListner::doBefore);
-		// do at 20190305
+
 		confProcessors.forEach(confProcessor -> {
 			try {
 				confProcessor.newInstance().process();
@@ -48,6 +45,10 @@ public class MainProcessor {
 
 		confListners.forEach(ConfListner::doAfter);
 
+	}
+
+	public static void stop() {
+		ConfProcessor.stopThreadPool();
 	}
 
 }

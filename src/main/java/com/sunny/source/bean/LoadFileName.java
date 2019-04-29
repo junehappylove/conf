@@ -1,5 +1,6 @@
-package com.sunny.source;
+package com.sunny.source.bean;
 
+import com.sunny.source.LoadSource;
 import com.sunny.source.file.LoadProperties;
 import com.sunny.source.file.LoadXml;
 import com.sunny.source.file.LoadYaml;
@@ -35,14 +36,6 @@ public class LoadFileName implements Comparable<LoadFileName>{
         this.loadSource = loadSource;
     }
 
-    @Override
-    public int compareTo(LoadFileName o) {
-        if(this.order == o.order){
-            return this.fileName.compareTo(o.fileName);
-        }
-        return o.order - this.order;
-    }
-
     public String getFileName() {
         return fileName;
     }
@@ -57,5 +50,30 @@ public class LoadFileName implements Comparable<LoadFileName>{
 
     public void setLoadSource(LoadSource loadSource) {
         this.loadSource = loadSource;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    @Override
+    public String toString() {
+        return "LoadFileName{" +
+                "fileName='" + fileName + '\'' +
+                ", order=" + order +
+                ", loadSource=" + loadSource +
+                '}';
+    }
+
+    @Override
+    public int compareTo(LoadFileName o) {
+        if (this.getOrder() == o.getOrder()) {
+            return this.getFileName().compareTo(o.getFileName());
+        }
+        return o.getOrder() - this.getOrder();
     }
 }

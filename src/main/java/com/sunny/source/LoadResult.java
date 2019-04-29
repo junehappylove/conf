@@ -1,46 +1,51 @@
 package com.sunny.source;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 import javax.lang.model.type.UnknownTypeException;
 
 import com.sunny.annotation.ConfSource;
+import com.sunny.source.bean.Content;
+import com.sunny.source.bean.LoadFileName;
+import com.sunny.source.bean.Node;
 import com.sunny.source.file.LoadProperties;
 import com.sunny.source.file.LoadXml;
 import com.sunny.source.file.LoadYaml;
 import com.sunny.source.filter.ConfFilter;
+import com.sunny.utils.FileUtil;
+import com.sunny.utils.ObjectUtil;
 import com.sunny.utils.PackageUtil;
 
 public class LoadResult {
 
 	private static List<LoadFileName> loadFileNameList = new ArrayList<>(Arrays.asList(LoadFileName.APPLICATION_YML, LoadFileName.APPLICATION_YAML,
 			LoadFileName.APPLICATION_PROPERTIES, LoadFileName.APPLICATION_XML));
-	
+	private static Object source = null;
+	private static Map<LoadFileName, Content> cache = new TreeMap<>();
+
 	public static void add(LoadFileName loadFile){
 		loadFileNameList.add(loadFile);
 	}
-	
 	public static void remove(LoadFileName loadFile){
 		loadFileNameList.remove(loadFile);
 	}
-	
-	private static Object source = null;
 
 	public static void loadResult() throws Exception {
 		//前置处理注解@ConfSource,用于获取默认配置之外的配置文件
 		loadOtherConfSource();
-		source = getSources();
+		source = getSources(false);
+	}
+
+	public static void updateResult() throws Exception{
+//		source = getSources(true);
+		source = getSourceM(true);
 	}
 
 	private static void loadOtherConfSource() {
 		Set<Class<?>> classSet = PackageUtil.getAllClassSet();
-		classSet.forEach(clazz -> loadConfSource(clazz));
+		classSet.forEach(LoadResult::loadConfSource);
 	}
 
 	//加载自定义的配置文件
@@ -76,12 +81,13 @@ public class LoadResult {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static Object getSources() throws Exception {
-		// Arrays.sort(loadFileNames);
+
+	private static Object getSourceM(boolean isUpdate) throws Exception {
 		Collections.sort(loadFileNameList);
 		Map<String, Object> res = new HashMap<>();
 		for (LoadFileName loadFileName : loadFileNameList) {
-			Object sourceResult = loadFileName.getLoadSource().loadSources(loadFileName.getFileName());
+			Object sourceResult = null;
+			sourceResult = loadFileName.getLoadSource().loadSources(loadFileName.getFileName());
 			if (null == sourceResult) {
 				continue;
 			}
@@ -91,8 +97,55 @@ public class LoadResult {
 			}
 			Node.merge(res, (Map<String, Object>) sourceResult, false);
 		}
-		ConfFilter.filter(res);
+		ConfFilter.filter(res, isUpdate);
 		return res;
+
 	}
 
+
+	private static Object getSources(boolean isUpdate) throws Exception {
+		Collections.sort(loadFileNameList);
+		Map<String, Object> res = new HashMap<>();
+		for (LoadFileName loadFileName : loadFileNameList) {
+			Object sourceResult = null;
+			boolean needUpdate = false;
+			if(!isUpdate) {
+				//load at the first time
+				sourceResult = loadFileName.getLoadSource().loadSources(loadFileName.getFileName());
+			}else{
+				long recModifyTime = 0;
+				if(null != cache.get(loadFileName)){
+					recModifyTime = cache.get(loadFileName).getModifyTime();
+				}
+				File file = FileUtil.getFile(loadFileName.getFileName());
+				long modifyTime = file.lastModified();
+				needUpdate = (modifyTime > recModifyTime);
+				if(needUpdate) {
+					//need to reload, means the file is changed
+					sourceResult = loadFileName.getLoadSource().loadSources(loadFileName.getFileName());
+					cache.get(loadFileName).setModifyTime(modifyTime);
+					cache.get(loadFileName).setContent(sourceResult);
+				}else{
+					//donnot need to reload, just load from resMap
+					if(null == cache.get(loadFileName))
+						sourceResult = null;
+					else
+						sourceResult = ObjectUtil.deepCopy(cache.get(loadFileName).getContent());
+				}
+			}
+			if (null == sourceResult) {
+				continue;
+			}
+			if(!isUpdate) {
+				cache.put(loadFileName, new Content(sourceResult));
+			}
+			if (0 == res.size()) {
+				res = (Map<String, Object>) sourceResult;
+				continue;
+			}
+			Node.merge(res, (Map<String, Object>) sourceResult, false, cache);
+		}
+		ConfFilter.filter(res, isUpdate);
+		return res;
+	}
 }

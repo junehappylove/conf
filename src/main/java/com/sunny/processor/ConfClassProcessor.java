@@ -2,21 +2,20 @@ package com.sunny.processor;
 
 import java.lang.reflect.Field;
 import java.util.Map;
-import java.util.Set;
 
-import com.sunny.annotation.ConfClass;
-import com.sunny.annotation.ConfClassDefault;
-import com.sunny.annotation.ConfClassIgnore;
-import com.sunny.annotation.ConfClassPrefix;
-import com.sunny.source.LoadResult;
-import com.sunny.utils.PackageUtil;
+import com.sunny.annotation.*;
 
-public class ConfClassProcessor extends ConfProcessor {
+public class ConfClassProcessor extends AbstractConfProcessor {
+
+	@Override
+	public void update() {
+		if(dynamicClassSet.size() > 0){
+			//create a new thread
+		}
+	}
 
 	@Override
 	public void process() {
-		Set<Class<?>> classSet = PackageUtil.getAllClassSet();
-		Object oo = LoadResult.getSource();
 		classSet.forEach(clazz -> putInConf(oo, clazz));
 	}
 
@@ -34,10 +33,11 @@ public class ConfClassProcessor extends ConfProcessor {
 		}
 		Field[] fields = clazz.getDeclaredFields();
 		for (Field field : fields) {
-			// ignore或者非静态
+			// ignored or not static
 			if (field.isAnnotationPresent(ConfClassIgnore.class) || (field.getModifiers() & 8) == 0) {
 				continue;
 			}
+			//about default value
 			boolean isDefault = false;
 			if (field.isAnnotationPresent(ConfClassDefault.class)) {
 				ConfClassDefault confClassDefault = field.getAnnotation(ConfClassDefault.class);
@@ -50,8 +50,18 @@ public class ConfClassProcessor extends ConfProcessor {
 				}
 				isDefault = true;
 			}
-
-			String tmpPrefix = prefix + "." + field.getName();
+			//about alias
+			String alias = null;
+			if(field.isAnnotationPresent(ConfClassAlias.class)){
+				ConfClassAlias confClassAlias = field.getAnnotation(ConfClassAlias.class);
+				alias = confClassAlias.value();
+			}
+			//produce the prefix
+			String tmpPrefix;
+			if(null == alias)
+				tmpPrefix = prefix + "." + field.getName();
+			else
+				tmpPrefix = prefix + "." + alias;
 			String[] props = tmpPrefix.split("\\.");
 
 			putInConfCore(oo, props, field, isDefault);
@@ -59,6 +69,10 @@ public class ConfClassProcessor extends ConfProcessor {
 	}
 
 	public static void putInConfCore(Object o, String[] props, Field field, boolean isDefault) {
+		//speed up
+		if(isDefault)
+			return;
+
 		int ind = 0;
 		while (true) {
 			if (ind < props.length && null != o && o instanceof Map) {
@@ -69,7 +83,7 @@ public class ConfClassProcessor extends ConfProcessor {
 			ind++;
 		}
 
-		if (null == o && isDefault) {
+		if (null == o) {
 			return;
 		}
 

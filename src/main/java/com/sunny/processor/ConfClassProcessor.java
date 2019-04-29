@@ -2,16 +2,15 @@ package com.sunny.processor;
 
 import java.lang.reflect.Field;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import com.sunny.annotation.*;
 
 public class ConfClassProcessor extends AbstractConfProcessor {
 
-	@Override
-	public void update() {
-		if(dynamicClassSet.size() > 0){
-			//create a new thread
-		}
+	public static void update() {
+		dynamicClassSet.forEach(clazz -> putInConf(oo, clazz));
 	}
 
 	@Override

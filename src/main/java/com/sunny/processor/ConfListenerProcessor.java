@@ -11,12 +11,6 @@ import com.sunny.source.listener.ConfListner;
  */
 public class ConfListenerProcessor extends AbstractConfProcessor {
 
-
-	@Override
-	public void update() {
-
-	}
-
 	@Override
 	public void process() {
 		ConfListner confListner = null;

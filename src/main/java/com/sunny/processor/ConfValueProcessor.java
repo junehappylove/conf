@@ -1,11 +1,7 @@
 package com.sunny.processor;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
-import java.nio.file.*;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
 import com.sunny.annotation.ConfPath;
 import com.sunny.annotation.SystemConfPath;
 import com.sunny.source.filter.ConfFilter;
@@ -14,88 +10,16 @@ import com.sunny.source.filter.ConfFilter;
  * create by zsunny
  * data: 2018/8/11
  **/
-public class ConfValueProcessor extends AbstractConfProcessor {
+public class ConfValueProcessor extends AbstractConfProcessor{
 
-    @Override
-    public void update() {
-        //dynamic update
-        if(dynamicFieldSet.size() > 0){
-            try {
-                getEvent();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-            //create a new thread
-            //没有变化就不用执行putInConfCore
-//            tp.scheduleAtFixedRate(new Thread(()->{
-//                try {
-//                    updateConfSource();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                dynamicFieldSet.forEach(filed -> putInConfCore(oo, filed, false));
-//            }),interval,interval, TimeUnit.SECONDS);
-        }
+    public static void update() {
+        dynamicFieldSet.forEach(filed -> putInConfCore(oo, filed, false));
     }
 
     @Override
     public void process(){
         classSet.forEach(clazz -> putInConf(oo, clazz));
-        update();
     }
-
-
-    private void getEvent() throws IOException{
-        String dirs = System.getProperty("user.dir")+"\\src\\main\\resources";
-        Path path = Paths.get(dirs);
-        WatchService watcher = FileSystems.getDefault().newWatchService();
-        path.register(watcher, StandardWatchEventKinds.ENTRY_MODIFY);
-        new Thread(() -> {
-            try {
-                boolean flag = true;
-                while (true) {
-                    System.out.println("hj");
-                    WatchKey key = watcher.take();
-                    int i = 0;
-                    for (WatchEvent<?> event : key.pollEvents()) {
-                        if (event.kind() == StandardWatchEventKinds.OVERFLOW) {
-                            continue;
-                        }
-                        if (flag){
-                            flag = false;
-                            continue;
-                        }
-                        try {
-                            updateConfSource();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        dynamicFieldSet.forEach(filed -> putInConfCore(oo, filed, false));
-                        flag = false;
-                    }
-                    if (!key.reset()) { // 重设WatchKey
-                        break;
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
-//
-//
-//        try {
-//            Thread.sleep(2000 * 60 * 10);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-    }
-
-
-
-
-
 
 
     /**

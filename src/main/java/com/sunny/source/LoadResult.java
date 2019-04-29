@@ -39,8 +39,7 @@ public class LoadResult {
 	}
 
 	public static void updateResult() throws Exception{
-//		source = getSources(true);
-		source = getSourceM(true);
+		source = getSources(true);
 	}
 
 	private static void loadOtherConfSource() {
@@ -81,32 +80,12 @@ public class LoadResult {
 	}
 
 	@SuppressWarnings("unchecked")
-
-	private static Object getSourceM(boolean isUpdate) throws Exception {
-		Collections.sort(loadFileNameList);
-		Map<String, Object> res = new HashMap<>();
-		for (LoadFileName loadFileName : loadFileNameList) {
-			Object sourceResult = null;
-			sourceResult = loadFileName.getLoadSource().loadSources(loadFileName.getFileName());
-			if (null == sourceResult) {
-				continue;
-			}
-			if (0 == res.size()) {
-				res = (Map<String, Object>) sourceResult;
-				continue;
-			}
-			Node.merge(res, (Map<String, Object>) sourceResult, false);
-		}
-		ConfFilter.filter(res, isUpdate);
-		return res;
-
-	}
-
-
 	private static Object getSources(boolean isUpdate) throws Exception {
 		Collections.sort(loadFileNameList);
 		Map<String, Object> res = new HashMap<>();
-		for (LoadFileName loadFileName : loadFileNameList) {
+		Iterator<LoadFileName> iter = loadFileNameList.iterator();
+		while (iter.hasNext()) {
+			LoadFileName loadFileName = iter.next();
 			Object sourceResult = null;
 			boolean needUpdate = false;
 			if(!isUpdate) {

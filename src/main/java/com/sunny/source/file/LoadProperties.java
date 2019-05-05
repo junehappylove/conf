@@ -10,7 +10,7 @@ import com.sunny.utils.FileUtil;
  * Email zsunny@yeah.net 
  * Date on 2018/10/5.
  */
-public class LoadProperties extends AbstractLoadSource {
+public class LoadProperties extends AbstractLoadProperties {
 
 	private LoadProperties() {
 	}

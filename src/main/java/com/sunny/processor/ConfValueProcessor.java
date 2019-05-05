@@ -75,7 +75,19 @@ public class ConfValueProcessor extends AbstractConfProcessor{
         }
         try {
             field.setAccessible(true);
-            field.set(field,String.valueOf(o));
+            switch (field.getType().getCanonicalName()){
+                case "java.lang.String":
+                    field.set(field, String.valueOf(o));
+                    break;
+               default:
+                   try {
+                       field.set(field, field.getType().cast(o));
+                   }catch (Exception e){
+                       field.set(field, o);
+                   }
+                   break;
+
+            }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }

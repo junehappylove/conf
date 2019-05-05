@@ -5,7 +5,6 @@ import com.sunny.source.LoadResult;
 import com.sunny.source.filter.ConfFilter;
 import com.sunny.utils.PackageUtil;
 
-import javax.management.relation.RoleUnresolved;
 import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;

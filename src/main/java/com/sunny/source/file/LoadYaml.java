@@ -12,7 +12,7 @@ import com.sunny.utils.FileUtil;
  * Email zsunny@yeah.net
  * Date on 2018/7/30.
  */
-public class LoadYaml implements LoadSource{
+public class LoadYaml implements LoadSource {
 
     private LoadYaml(){}
 

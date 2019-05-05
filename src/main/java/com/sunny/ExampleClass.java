@@ -1,7 +1,6 @@
 package com.sunny;
 
 import com.sunny.annotation.*;
-import sun.font.TrueTypeFont;
 
 @Dynamic
 @ConfClass

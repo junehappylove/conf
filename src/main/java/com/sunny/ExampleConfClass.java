@@ -6,8 +6,8 @@ import com.sunny.annotation.ConfClassIgnore;
 import com.sunny.annotation.ConfClassPrefix;
 
 @ConfClass
-@ConfClassPrefix("test.")
-public class ExampleClass {
+@ConfClassPrefix("test.example.")
+public class ExampleConfClass {
 
     private static String a;
     private static String b = "2";

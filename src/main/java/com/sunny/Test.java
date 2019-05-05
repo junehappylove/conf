@@ -11,7 +11,8 @@ public class Test {
     public static void main(String[] args) {
         ConfStarter.start();
         Example.printPort();
-        ExampleClass.print();
+        ExampleConfClass.print();
+        ExampleConfClassWithNotAnno.print();
     }
 
 }

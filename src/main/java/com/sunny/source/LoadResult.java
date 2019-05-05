@@ -78,7 +78,6 @@ public class LoadResult {
 
 	@SuppressWarnings("unchecked")
 	public static Object getSources() throws Exception {
-		// Arrays.sort(loadFileNames);
 		loadFileNameList = new ArrayList<>(new TreeSet<>(loadFileNameList));
 		Collections.sort(loadFileNameList);
 		Map<String, Object> res = new HashMap<>();

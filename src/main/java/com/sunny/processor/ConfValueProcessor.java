@@ -1,6 +1,7 @@
 package com.sunny.processor;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Set;
 
@@ -77,8 +78,8 @@ public class ConfValueProcessor extends ConfProcessor {
 		}
 		try {
 			field.setAccessible(true);
-			//TODO 适合且仅适合String字段 ，可以根据field类型进行转换[boolean int long double float byte short char String]
-			field.set(field, String.valueOf(o));
+			//适合且仅适合String字段 ，可以根据field类型进行转换[boolean int long double float byte short char String]
+			field.set(field, valueOf(String.valueOf(o), field.getType()));
 		} catch (ExceptionInInitializerError e) {
 			
 		} catch (Exception e) {
@@ -86,4 +87,88 @@ public class ConfValueProcessor extends ConfProcessor {
 		}
 	}
 
+	private static Object valueOf(String val, Class<?> type) {
+		Object obj = null;
+		if (val == null) {
+			return null;
+		}
+		switch (type.getTypeName()) {
+		case "java.lang.String":
+			// 字符串
+			obj = val;
+			break;
+		case "int":
+			// 整数
+			obj = Integer.parseInt(val);
+			break;
+		case "java.lang.Integer":
+			// 整数
+			obj = Integer.parseInt(val);
+			break;
+		case "long":
+			// 整数
+			obj = Long.parseLong(val);
+			break;
+		case "java.lang.Long":
+			// 整数
+			obj = Long.parseLong(val);
+			break;
+		case "double":
+			// 小数
+			obj = Double.parseDouble(val);
+			break;
+		case "java.lang.Double":
+			// 小数
+			obj = Double.parseDouble(val);
+			break;
+		case "boolean":
+			// 布尔
+			obj = Boolean.parseBoolean(val);
+			break;
+		case "java.lang.Boolean":
+			// 布尔
+			obj = Boolean.parseBoolean(val);
+			break;
+		case "java.math.BigDecimal":
+			// 数字
+			obj = BigDecimal.valueOf(Double.parseDouble(val));
+			break;
+		case "short":
+			// 短整数
+			obj = Short.parseShort(val);
+			break;
+		case "java.lang.Short":
+			// 短整数
+			obj = Short.parseShort(val);
+			break;
+		case "float":
+			// 小数
+			obj = Float.parseFloat(val);
+			break;
+		case "java.lang.Float":
+			// 小数
+			obj = Float.parseFloat(val);
+			break;
+		case "char":
+			// 字符
+			obj = Character.valueOf(val.charAt(0));
+			break;
+		case "java.lang.Character":
+			// 字符
+			obj = Character.valueOf(val.charAt(0));
+			break;
+		case "byte":
+			// 字符
+			obj = Byte.valueOf(val);
+			break;
+		case "java.lang.Byte":
+			// 字符
+			obj = Byte.valueOf(val);
+			break;
+
+		default:
+			break;
+		}
+		return obj;
+	}
 }

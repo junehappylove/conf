@@ -7,7 +7,13 @@ system:
     listener: com.sunny.TestListener
 
 test:
-  a: 1
-  b: 2
-  c: 3
-  d: 
+  example:
+    a: 1a
+    b: 2b
+    c: 3c
+    d: 
+  exampleWithNotAnno:
+    a2: 1a
+    b2: 2b
+    c2: 3c
+    d2: 

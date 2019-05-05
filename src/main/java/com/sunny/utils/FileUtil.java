@@ -19,8 +19,10 @@ public class FileUtil {
 	 * 根目录为classpath
 	 * 
 	 * @param path
-	 * @return
+	 *            配置文件路径
+	 * @return 内容
 	 * @throws IOException
+	 *             IO异常
 	 */
 	public static String readFile(String path) throws IOException {
 		InputStream ins = getFileInputStream(path);
@@ -41,8 +43,10 @@ public class FileUtil {
 	 * 获取指定文件（classpath下的）的inputStream
 	 * 
 	 * @param path
-	 * @return
+	 *            配置文件路径
+	 * @return 内容
 	 * @throws IOException
+	 *             IO异常
 	 */
 	public static InputStream getFileInputStream(String path) throws IOException {
 		if (path == null || path.length() == 0 || path.trim().length() == 0) {
@@ -59,9 +63,11 @@ public class FileUtil {
 	 * 根目录为classpath。
 	 * 
 	 * @param path
+	 *            配置文件路径
 	 * @param content
+	 *            内容
 	 * @throws IOException
-	 *             io异常
+	 *             IO异常
 	 * @throws NullPointerException
 	 *             文件不存在空指针异常
 	 */
@@ -83,12 +89,12 @@ public class FileUtil {
 	 * 判断路径是否存在
 	 * 
 	 * @param path
-	 * @return
+	 *            配置文件路径
+	 * @return 是否存在
 	 */
 	public static boolean judgeFileExist(String path) {
 		URL url = null;
 		File file = null;
-		// url = Thread.currentThread().getContextClassLoader().getResource("");
 		url = Thread.currentThread().getContextClassLoader().getResource(path);
 		if (url == null) {
 			return false;
@@ -103,13 +109,14 @@ public class FileUtil {
 	 * 判断路径父文件夹是否存在，不存在则创建
 	 * 
 	 * @param path
-	 * @return
+	 *            配置文件路径
+	 * @return 文件
 	 * @throws IOException
+	 *             IO异常
 	 */
 	private static File getFile(String path) throws IOException {
 		URL url = null;
 		File file = null;
-		// url = Thread.currentThread().getContextClassLoader().getResource("");
 		url = Thread.currentThread().getContextClassLoader().getResource(path);
 		if (url == null) {
 			return null;
@@ -118,7 +125,7 @@ public class FileUtil {
 		if (!file.getParentFile().exists()) {
 			boolean mkResult = file.getParentFile().mkdirs();
 			if (!mkResult) {
-				log.error("创建文件夹失败");
+				log.error("Create dir error!");
 			}
 		}
 		return file;

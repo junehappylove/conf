@@ -4,7 +4,7 @@ server:
 system:
   conf:
     active: prod
-    listener: com.sunny.TestListener
+    listener: com.sunny.source.listener.DefaultConfListner
 
 test:
   example:

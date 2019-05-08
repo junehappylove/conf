@@ -17,12 +17,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * java 包工具类
- * create by zsunny data: 2018/8/11
+ * 
+ * @author zsunny on 2018/8/11
+ * @author junwei on 20190508
  **/
 public class PackageUtil {
 
 	private static final Logger log = LoggerFactory.getLogger(PackageUtil.class);
-	private static Set<Class<?>> allClassSet = getClasses("");
+	private static Set<Class<?>> allClassSet = getClasses("com.iscas.june.utils");
 
 	public static Set<Class<?>> getAllClassSet() {
 		return allClassSet;

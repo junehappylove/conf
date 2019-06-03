@@ -32,7 +32,6 @@ public class Example {
         System.out.println("prop-test:" + test);
         System.out.println("prop-active:" + active);
         System.out.println("thisIsAInteger:" + thisIsAInteger);
-
     }
 
 }

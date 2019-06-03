@@ -1,7 +1,15 @@
 package com.sunny.processor;
 
+/**
+ * 配置处理抽象<br>
+ * 
+ * @author junehappylove
+ *
+ */
 public abstract class ConfProcessor {
-	/* 好好的抽象方法请不要破坏掉，否则就没意义了*/
-    // public static void process(){}
+
+	/**
+	 * 处理
+	 */
     public abstract void process();
 }

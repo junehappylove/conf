@@ -45,9 +45,7 @@ public class MainProcessor {
 				e.printStackTrace();
 			}
 		});
-
 		confListeners.forEach(ConfListener::doAfter);
-
 	}
 
 }

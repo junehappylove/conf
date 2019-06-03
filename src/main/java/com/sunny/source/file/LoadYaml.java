@@ -8,15 +8,15 @@ import com.sunny.source.LoadSource;
 import com.sunny.utils.FileUtil;
 
 /**
- * @author zsunny Email zsunny@yeah.net Date on 2018/7/30.
+ * 加载yaml/yml配置文件<br>
+ * 
+ * @author zsunny 
+ * Email zsunny@yeah.net 
+ * Date on 2018/7/30.
  */
 public class LoadYaml implements LoadSource {
 
 	private LoadYaml() {
-	}
-
-	private static class LoadYamlHolder {
-		private static LoadYaml loadYaml = new LoadYaml();
 	}
 
 	public static LoadYaml getInstance() {
@@ -30,6 +30,10 @@ public class LoadYaml implements LoadSource {
 			return null;
 		return yaml.load(FileUtil.readFile(path));
 
+	}
+
+	private static class LoadYamlHolder {
+		private static LoadYaml loadYaml = new LoadYaml();
 	}
 
 }

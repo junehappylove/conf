@@ -11,5 +11,5 @@ public abstract class ConfProcessor {
 	/**
 	 * 处理
 	 */
-    public abstract void process();
+	public abstract void process(String pack);
 }

@@ -20,21 +20,21 @@ import com.sunny.utils.PackageUtil;
 
 public class LoadResult {
 
-	private static List<LoadFileName> loadFileNameList = new ArrayList<>(Arrays.asList(LoadFileName.APPLICATION_YML, LoadFileName.APPLICATION_YAML,
-			LoadFileName.APPLICATION_PROPERTIES, LoadFileName.APPLICATION_XML));
-	
-	public static void add(LoadFileName loadFile){
+	private static List<LoadFileName> loadFileNameList = new ArrayList<>(Arrays.asList(LoadFileName.APPLICATION_YML,
+			LoadFileName.APPLICATION_YAML, LoadFileName.APPLICATION_PROPERTIES, LoadFileName.APPLICATION_XML));
+
+	public static void add(LoadFileName loadFile) {
 		loadFileNameList.add(loadFile);
 	}
-	
-	public static void remove(LoadFileName loadFile){
+
+	public static void remove(LoadFileName loadFile) {
 		loadFileNameList.remove(loadFile);
 	}
-	
+
 	private static Object source = null;
 
 	public static void loadResult() throws Exception {
-		//前置处理注解@ConfSource,用于获取默认配置之外的配置文件
+		// 前置处理注解@ConfSource,用于获取默认配置之外的配置文件
 		loadOtherConfSource();
 		source = getSources();
 	}
@@ -44,14 +44,14 @@ public class LoadResult {
 		classSet.forEach(clazz -> loadConfSource(clazz));
 	}
 
-	//加载自定义的配置文件
+	// 加载自定义的配置文件
 	private static void loadConfSource(Class<?> clazz) {
 		if (!clazz.isAnnotationPresent(ConfSource.class)) {
 			return;
 		}
 		if (clazz.isAnnotationPresent(ConfSource.class)) {
 			ConfSource confSource = clazz.getAnnotation(ConfSource.class);
-			String fileName = confSource.value();//配置文件名/路径
+			String fileName = confSource.value();// 配置文件名/路径
 			LoadSource loadSource = getLoadSource(fileName);
 			LoadFileName loadFile = new LoadFileName(fileName, loadSource);
 			loadFileNameList.add(loadFile);
@@ -59,15 +59,15 @@ public class LoadResult {
 	}
 
 	private static LoadSource getLoadSource(String fileName) {
-		if(fileName.endsWith(".yaml")){
+		if (fileName.endsWith(".yaml")) {
 			return LoadYaml.getInstance();
-		}else if(fileName.endsWith(".yml")){
+		} else if (fileName.endsWith(".yml")) {
 			return LoadYaml.getInstance();
-		}else if(fileName.endsWith(".properties")){
+		} else if (fileName.endsWith(".properties")) {
 			return LoadProperties.getInstance();
-		}else if(fileName.endsWith(".xml")){
+		} else if (fileName.endsWith(".xml")) {
 			return LoadXml.getInstance();
-		}else{
+		} else {
 			throw new UnknownTypeException(null, "暂时不支持此种配置文件");
 		}
 	}

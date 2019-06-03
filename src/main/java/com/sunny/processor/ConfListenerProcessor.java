@@ -12,7 +12,7 @@ import com.sunny.source.listener.ConfListener;
 public class ConfListenerProcessor extends ConfProcessor {
 
 	@Override
-	public void process() {
+	public void process(String pack) {
 		ConfListener confListener = null;
 		try {
 			confListener = getListener();

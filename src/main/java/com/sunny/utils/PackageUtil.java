@@ -25,11 +25,16 @@ public class PackageUtil {
 
 	private static final Logger log = LoggerFactory.getLogger(PackageUtil.class);
 	// XXX 专门为nfs-qd的一个版本处理，否则提供根路径.
-	private static String[] packages = {"com.iscas.june.utils", "com.iscas.bigdata", "com.sunny.test"};
+	private static String[] packages = { "com.iscas.june.utils", "com.iscas.bigdata", "com.sunny.test" };
 	private static Set<Class<?>> allClassSet = getClasses(packages);
+	// private static String[] expected = { "" };
 
 	public static Set<Class<?>> getAllClassSet() {
 		return allClassSet;
+	}
+
+	public static Set<Class<?>> getClassSet(String pack) {
+		return getClasses(pack);
 	}
 
 	/**
@@ -158,7 +163,20 @@ public class PackageUtil {
 		File[] dirfiles = dir.listFiles(new FileFilter() {
 			// 自定义过滤规则 如果可以循环(包含子目录) 或则是以.class结尾的文件(编译好的java类文件)
 			public boolean accept(File file) {
-				return (recursive && file.isDirectory()) || (file.getName().endsWith(".class"));
+				boolean ok = false;
+				if (recursive && file.isDirectory()) {
+					ok = true;
+				}
+				if (file.getName().endsWith(".class")) {
+					ok = true;
+				}
+				if (file.getName().startsWith("Test")) {// XXX 把有关的测试类排除掉
+					ok = false;
+				}
+				if (file.getName().endsWith("Test.class")) {// XXX 把有关的测试类排除掉
+					ok = false;
+				}
+				return ok;
 			}
 		});
 		// 循环所有文件

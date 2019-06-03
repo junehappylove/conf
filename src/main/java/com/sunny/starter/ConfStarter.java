@@ -11,8 +11,8 @@ import com.sunny.processor.main.MainProcessor;
  */
 public class ConfStarter {
 
-    public static void start(){
-        MainProcessor.process();
-    }
+	public static void start(String pack) {
+		MainProcessor.process(pack);
+	}
 
 }

@@ -9,19 +9,19 @@ import com.sunny.annotation.ConfClassPrefix;
 @ConfClassPrefix("test.example.")
 public class ExampleConfClass {
 
-    private static String a;
-    private static String b = "2";
+	private static String a;
+	private static String b = "2";
 
-    @ConfClassIgnore
-    private static String c;
+	@ConfClassIgnore
+	private static String c;
 
-    @ConfClassDefault("ddddd")
-    private static String d;
+	@ConfClassDefault("ddddd")
+	private static String d;
 
-    public static void print(){
-        System.out.println("class-a:" + a);
-        System.out.println("class-b:" + b);
-        System.out.println("class-c-null:" + c);
-        System.out.println("class-d-default:" + d);
-    }
+	public static void print() {
+		System.out.println("class-a:" + a);
+		System.out.println("class-b:" + b);
+		System.out.println("class-c-null:" + c);
+		System.out.println("class-d-default:" + d);
+	}
 }

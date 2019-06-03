@@ -15,10 +15,10 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-        ConfStarter.start();
-        Example.printPort();
-        ExampleConfClass.print();
-        ExampleConfClassWithNotAnno.print();
+		ConfStarter.start("com.sunny.test");
+		Example.printPort();
+		ExampleConfClass.print();
+		ExampleConfClassWithNotAnno.print();
 	}
 
 }

@@ -22,7 +22,7 @@ public class MainProcessor {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		new ConfListenerProcessor().process();
+		new ConfListenerProcessor().process(null);
 		confProcessors.add(ConfValueProcessor.class);
 		confProcessors.add(ConfClassProcessor.class);
 	}
@@ -35,12 +35,12 @@ public class MainProcessor {
 		confProcessors.add(confProcessor);
 	}
 
-	public static void process() {
+	public static void process(String pack) {
 		confListeners.forEach(ConfListener::doBefore);
 
 		confProcessors.forEach(confProcessor -> {
 			try {
-				confProcessor.newInstance().process();
+				confProcessor.newInstance().process(pack);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

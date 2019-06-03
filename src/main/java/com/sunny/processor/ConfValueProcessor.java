@@ -17,9 +17,10 @@ import com.sunny.utils.PackageUtil;
 public class ConfValueProcessor extends ConfProcessor {
 
 	@Override
-	public void process() {
+	public void process(String pack) {
 		// 获取类
-		Set<Class<?>> classSet = PackageUtil.getAllClassSet();
+		// Set<Class<?>> classSet = PackageUtil.getAllClassSet();
+		Set<Class<?>> classSet = PackageUtil.getClassSet(pack);
 		// 获取配置
 		Object oo = LoadResult.getSource();
 		// 执行操作
@@ -78,10 +79,11 @@ public class ConfValueProcessor extends ConfProcessor {
 		}
 		try {
 			field.setAccessible(true);
-			//适合且仅适合String字段 ，可以根据field类型进行转换[boolean int long double float byte short char String]
+			// 适合且仅适合String字段 ，可以根据field类型进行转换[boolean int long double float
+			// byte short char String]
 			field.set(field, valueOf(String.valueOf(o), field.getType()));
 		} catch (ExceptionInInitializerError e) {
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -20,8 +20,9 @@ import com.sunny.utils.PackageUtil;
 public class ConfClassProcessor extends ConfProcessor {
 
 	@Override
-	public void process() {
-		Set<Class<?>> classSet = PackageUtil.getAllClassSet();
+	public void process(String pack) {
+		// Set<Class<?>> classSet = PackageUtil.getAllClassSet();
+		Set<Class<?>> classSet = PackageUtil.getClassSet(pack);
 		Object oo = LoadResult.getSource();
 		classSet.forEach(clazz -> putInConf(oo, clazz));
 	}
@@ -60,7 +61,7 @@ public class ConfClassProcessor extends ConfProcessor {
 			String tmpPrefix = prefix + "." + field.getName();
 			String[] props = tmpPrefix.split("\\.");
 			String type = field.getType().getName();
-			if("java.lang.String".contains(type)){
+			if ("java.lang.String".contains(type)) {
 				putInConfCore(oo, props, field, isDefault);
 			}
 		}

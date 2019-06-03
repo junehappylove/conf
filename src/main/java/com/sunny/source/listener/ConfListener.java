@@ -1,7 +1,7 @@
 package com.sunny.source.listener;
 
 //TODO 实现监听器
-public interface ConfListner {
+public interface ConfListener {
 
     void doBefore();
 

@@ -6,6 +6,9 @@
 
     <groupId>com.sunny</groupId>
     <artifactId>conf</artifactId>
+    <version>nfs-qd</version>
+    <name>conf</name>
+    <description>专门为nfs-qd项目定制版，固定扫描类路径：com.iscas.june.utils</description>
 
 
     <dependencies>
@@ -21,7 +24,6 @@
             <version>1.17</version>
         </dependency>
     </dependencies>
-
 
     <build>
         <!--所有子pom会继承到-->
@@ -83,8 +85,4 @@
             </plugins>
         </pluginManagement>
     </build>
-
-    <version>nfs-qd</version>
-    <name>conf</name>
-    <description>专门为nfs-qd项目定制版，固定扫描类路径：com.iscas.june.utils</description>
 </project>

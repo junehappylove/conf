@@ -6,6 +6,8 @@ import java.util.Properties;
 import com.sunny.utils.FileUtil;
 
 /**
+ * 加载properties配置文件<br>
+ * 
  * created by zsunny 
  * Email zsunny@yeah.net 
  * Date on 2018/10/5.
@@ -13,13 +15,6 @@ import com.sunny.utils.FileUtil;
 public class LoadProperties extends AbstractLoadProperties {
 
 	private LoadProperties() {
-	}
-
-	/**
-	 * 静态内部类实现单例
-	 */
-	private static class LoadPropertiesHolder {
-		private static LoadProperties loadProperties = new LoadProperties();
 	}
 
 	public static LoadProperties getInstance() {
@@ -36,4 +31,10 @@ public class LoadProperties extends AbstractLoadProperties {
 		return convertToMap(properties);
 	}
 
+	/**
+	 * 静态内部类实现单例
+	 */
+	private static class LoadPropertiesHolder {
+		private static LoadProperties loadProperties = new LoadProperties();
+	}
 }

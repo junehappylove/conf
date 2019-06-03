@@ -24,17 +24,35 @@ import org.slf4j.LoggerFactory;
 public class PackageUtil {
 
 	private static final Logger log = LoggerFactory.getLogger(PackageUtil.class);
-	private static Set<Class<?>> allClassSet = getClasses("com.iscas.june.utils");
+	// XXX 专门为nfs-qd的一个版本处理，否则提供根路径.
+	private static String[] packages = {"com.iscas.june.utils", "com.iscas.bigdata", "com.sunny.test"};
+	private static Set<Class<?>> allClassSet = getClasses(packages);
 
 	public static Set<Class<?>> getAllClassSet() {
 		return allClassSet;
 	}
 
 	/**
+	 * 处理多个包路径<br>
+	 * 
+	 * @param packs
+	 *            包路径集合
+	 * @return 所有待处理的类
+	 */
+	public static Set<Class<?>> getClasses(String[] packs) {
+		Set<Class<?>> classes = new LinkedHashSet<>();
+		for (String pack : packs) {
+			classes.addAll(getClasses(pack));
+		}
+		return classes;
+	}
+
+	/**
 	 * 从包package中获取所有的Class
 	 *
 	 * @param pack
-	 * @return
+	 *            包路径
+	 * @return 类集
 	 */
 	public static Set<Class<?>> getClasses(String pack) {
 		// 第一个class类的集合
@@ -45,7 +63,7 @@ public class PackageUtil {
 		String packageName = pack;
 		String packageDirName = packageName.replace('.', '/');
 		// 定义一个枚举的集合 并进行循环来处理这个目录下的things
-		Enumeration<URL> dirs;
+		Enumeration<URL> dirs = null;
 		try {
 			dirs = Thread.currentThread().getContextClassLoader().getResources(packageDirName);
 			// 循环迭代下去
@@ -112,7 +130,6 @@ public class PackageUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		return classes;
 	}
 
@@ -120,9 +137,13 @@ public class PackageUtil {
 	 * 以文件的形式来获取包下的所有Class
 	 *
 	 * @param packageName
+	 *            包名
 	 * @param packagePath
+	 *            路径
 	 * @param recursive
+	 *            是否迭代
 	 * @param classes
+	 *            类的集合
 	 */
 	public static void findAndAddClassesInPackageByFile(String packageName, String packagePath, final boolean recursive,
 			Set<Class<?>> classes) {

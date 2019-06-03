@@ -1,4 +1,4 @@
-package com.sunny;
+package com.sunny.test;
 
 import com.sunny.annotation.ConfClass;
 import com.sunny.annotation.ConfClassDefault;
@@ -18,11 +18,10 @@ public class ExampleConfClass {
     @ConfClassDefault("ddddd")
     private static String d;
 
-
     public static void print(){
         System.out.println("class-a:" + a);
         System.out.println("class-b:" + b);
-        System.out.println("class-c:" + c);
-        System.out.println("class-d:" + d);
+        System.out.println("class-c-null:" + c);
+        System.out.println("class-d-default:" + d);
     }
 }

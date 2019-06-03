@@ -11,6 +11,12 @@ import com.sunny.annotation.ConfClassPrefix;
 import com.sunny.source.LoadResult;
 import com.sunny.utils.PackageUtil;
 
+/**
+ * 标识配置类的处理器<br>
+ * 
+ * @author junehappylove
+ *
+ */
 public class ConfClassProcessor extends ConfProcessor {
 
 	@Override
@@ -70,11 +76,9 @@ public class ConfClassProcessor extends ConfProcessor {
 			}
 			ind++;
 		}
-
 		if (null == o && isDefault) {
 			return;
 		}
-
 		try {
 			field.setAccessible(true);
 			field.set(field, String.valueOf(o));

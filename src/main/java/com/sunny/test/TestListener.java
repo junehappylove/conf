@@ -1,8 +1,8 @@
-package com.sunny;
+package com.sunny.test;
 
-import com.sunny.source.listener.ConfListner;
+import com.sunny.source.listener.ConfListener;
 
-public class TestListener implements ConfListner {
+public class TestListener implements ConfListener {
 
 	@Override
 	public void doBefore() {

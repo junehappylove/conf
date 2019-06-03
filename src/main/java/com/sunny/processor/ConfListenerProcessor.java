@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.sunny.processor.main.MainProcessor;
 import com.sunny.source.filter.ConfFilter;
-import com.sunny.source.listener.ConfListner;
+import com.sunny.source.listener.ConfListener;
 
 /**
  * 简易listener处理器，后考虑多listener处理
@@ -13,7 +13,7 @@ public class ConfListenerProcessor extends ConfProcessor {
 
 	@Override
 	public void process() {
-		ConfListner confListner = null;
+		ConfListener confListner = null;
 		try {
 			confListner = getListener();
 		} catch (ClassNotFoundException e) {
@@ -36,7 +36,7 @@ public class ConfListenerProcessor extends ConfProcessor {
 	 * @throws InstantiationException
 	 */
 	@SuppressWarnings("unchecked")
-	private static ConfListner getListener()
+	private static ConfListener getListener()
 			throws ClassNotFoundException, IllegalAccessException, InstantiationException {
 		String listenerClass = "";
 		String[] confPath = ConfFilter.CONF_LISTENER.split("\\.");
@@ -58,8 +58,8 @@ public class ConfListenerProcessor extends ConfProcessor {
 		}
 		if ("".equals(listenerClass))
 			return null;
-		ConfListner confListner = (ConfListner) Class.forName(listenerClass).newInstance();
-		return confListner;
+		ConfListener confListener = (ConfListener) Class.forName(listenerClass).newInstance();
+		return confListener;
 	}
 
 }

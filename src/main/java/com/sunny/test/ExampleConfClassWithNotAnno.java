@@ -1,4 +1,4 @@
-package com.sunny;
+package com.sunny.test;
 
 import com.sunny.annotation.ConfClassDefault;
 import com.sunny.annotation.ConfClassIgnore;
@@ -6,8 +6,8 @@ import com.sunny.annotation.ConfClassPrefix;
 import com.sunny.annotation.ConfPath;
 import com.sunny.annotation.ConfSource;
 
-@ConfClassPrefix("test.exampleWithNotAnno")
 @ConfSource
+@ConfClassPrefix("test.exampleWithNotAnno")
 public class ExampleConfClassWithNotAnno {
 
     private static String a2;

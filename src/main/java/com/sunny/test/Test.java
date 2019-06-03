@@ -1,18 +1,24 @@
-package com.sunny;
+/**
+ * 
+ */
+package com.sunny.test;
 
 import com.sunny.starter.ConfStarter;
 
 /**
- * create by zsunny
- * data: 2018/8/11
- **/
+ * @author junehappylove
+ *
+ */
 public class Test {
 
-    public static void main(String[] args) {
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
         ConfStarter.start();
         Example.printPort();
         ExampleConfClass.print();
         ExampleConfClassWithNotAnno.print();
-    }
+	}
 
 }

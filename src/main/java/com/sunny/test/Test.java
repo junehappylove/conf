@@ -1,4 +1,4 @@
-package com.sunny;
+package com.sunny.test;
 
 import com.sunny.starter.ConfStarter;
 

@@ -10,7 +10,7 @@ package com.sunny.source.listener;
  * @author junehappylove
  *
  */
-public class DefaultConfListner implements ConfListner {
+public class DefaultConfListener implements ConfListener {
 
 	/*
 	 * (non-Javadoc)

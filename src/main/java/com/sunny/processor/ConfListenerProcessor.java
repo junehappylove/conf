@@ -13,9 +13,9 @@ public class ConfListenerProcessor extends ConfProcessor {
 
 	@Override
 	public void process() {
-		ConfListener confListner = null;
+		ConfListener confListener = null;
 		try {
-			confListner = getListener();
+			confListener = getListener();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -23,8 +23,8 @@ public class ConfListenerProcessor extends ConfProcessor {
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		}
-		if (null != confListner)
-			MainProcessor.addListener(confListner);
+		if (null != confListener)
+			MainProcessor.addListener(confListener);
 	}
 
 	/**

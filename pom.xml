@@ -83,18 +83,18 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-        
-		<distributionManagement>
-			<repository>
-				<id>local-releases</id>
-				<name>Nexus Release Repository</name>
-				<url>http://114.116.28.251:8081/repository/java/</url>
-			</repository>
-			<snapshotRepository>
-				<id>local-snapshots</id>
-				<name>Nexus Snapshot Repository</name>
-				<url>http://114.116.28.251:8081/repository/java/</url>
-			</snapshotRepository>
-		</distributionManagement>
     </build>
+        
+	<distributionManagement>
+		<repository>
+			<id>local-releases</id>
+			<name>Nexus Release Repository</name>
+			<url>http://114.116.28.251:8081/repository/java/</url>
+		</repository>
+		<snapshotRepository>
+			<id>local-snapshots</id>
+			<name>Nexus Snapshot Repository</name>
+			<url>http://114.116.28.251:8081/repository/java/</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>

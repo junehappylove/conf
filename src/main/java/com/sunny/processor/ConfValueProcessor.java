@@ -20,9 +20,13 @@ public class ConfValueProcessor extends ConfProcessor {
 	@Override
 	public void process(String pack) {
 		// 获取类
-		// Set<Class<?>> classSet = PackageUtil.getAllClassSet();
-		String[] packs = pack.split(",");
-		Set<Class<?>> classSet = PackageUtil.getClasses(packs);
+		Set<Class<?>> classSet = null;
+		if (pack == null || pack.length() == 0) {
+			classSet = PackageUtil.getAllClassSet();
+		} else {
+			String[] packs = pack.split(",");
+			classSet = PackageUtil.getClasses(packs);
+		}
 		// 获取配置
 		Object oo = LoadResult.getSource();
 		// 执行操作

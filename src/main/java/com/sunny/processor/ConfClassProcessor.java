@@ -21,9 +21,13 @@ public class ConfClassProcessor extends ConfProcessor {
 
 	@Override
 	public void process(String pack) {
-		// Set<Class<?>> classSet = PackageUtil.getAllClassSet();
-		String[] packs = pack.split(",");
-		Set<Class<?>> classSet = PackageUtil.getClasses(packs);
+		Set<Class<?>> classSet = null;
+		if (pack == null || pack.length() == 0) {
+			classSet = PackageUtil.getAllClassSet();
+		} else {
+			String[] packs = pack.split(",");
+			classSet = PackageUtil.getClasses(packs);
+		}
 		Object oo = LoadResult.getSource();
 		classSet.forEach(clazz -> putInConf(oo, clazz));
 	}

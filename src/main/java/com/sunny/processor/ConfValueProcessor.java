@@ -12,7 +12,8 @@ import com.sunny.source.filter.ConfFilter;
 import com.sunny.utils.PackageUtil;
 
 /**
- * create by zsunny data: 2018/8/11
+ * @author  zsunny data: 2018/8/11
+ * @author junehappylove
  **/
 public class ConfValueProcessor extends ConfProcessor {
 
@@ -20,7 +21,8 @@ public class ConfValueProcessor extends ConfProcessor {
 	public void process(String pack) {
 		// 获取类
 		// Set<Class<?>> classSet = PackageUtil.getAllClassSet();
-		Set<Class<?>> classSet = PackageUtil.getClassSet(pack);
+		String[] packs = pack.split(",");
+		Set<Class<?>> classSet = PackageUtil.getClasses(packs);
 		// 获取配置
 		Object oo = LoadResult.getSource();
 		// 执行操作

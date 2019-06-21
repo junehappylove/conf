@@ -25,7 +25,7 @@ public class PackageUtil {
 
 	private static final Logger log = LoggerFactory.getLogger(PackageUtil.class);
 	// XXX 专门为nfs-qd的一个版本处理，否则提供根路径.
-	private static String[] packages = { "com.iscas.june.utils", "com.iscas.bigdata", "com.sunny.test" };
+	private static String[] packages = { "com.iscas.june.log", "com.iscas.june.utils", "com.iscas.bigdata", "com.sunny.test" };
 	private static Set<Class<?>> allClassSet = getClasses(packages);
 	// private static String[] expected = { "" };
 
@@ -47,7 +47,7 @@ public class PackageUtil {
 	public static Set<Class<?>> getClasses(String[] packs) {
 		Set<Class<?>> classes = new LinkedHashSet<>();
 		for (String pack : packs) {
-			classes.addAll(getClasses(pack));
+			classes.addAll(getClasses(pack.trim()));
 		}
 		return classes;
 	}

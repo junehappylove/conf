@@ -10,7 +10,6 @@
     <name>conf</name>
     <description>专门为nfs-qd项目定制版，固定扫描类路径：com.iscas.june.utils</description>
 
-
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -84,5 +83,18 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        
+		<distributionManagement>
+			<repository>
+				<id>local-releases</id>
+				<name>Nexus Release Repository</name>
+				<url>http://114.116.28.251:8081/repository/java/</url>
+			</repository>
+			<snapshotRepository>
+				<id>local-snapshots</id>
+				<name>Nexus Snapshot Repository</name>
+				<url>http://114.116.28.251:8081/repository/java/</url>
+			</snapshotRepository>
+		</distributionManagement>
     </build>
 </project>
